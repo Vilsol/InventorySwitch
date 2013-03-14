@@ -16,7 +16,7 @@ public class InventorySwitchSet {
 
 	public InventorySwitchSet(String args, CommandSender sender) {
 		InventorySwitchExists ex = new InventorySwitchExists();
-		if(ex.doesExist(args.toLowerCase())){
+		if(!ex.doesExist(args.toLowerCase())){
 			
 			File SignFile = new File("plugins/InventorySwitch/", "config.yml");
 			YamlConfiguration SFile = new YamlConfiguration();
