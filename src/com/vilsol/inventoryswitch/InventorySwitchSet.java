@@ -52,7 +52,7 @@ public class InventorySwitchSet {
 				}
 			}
 			
-			SFile.set("Stacks." + args, adding);
+			SFile.set("Stacks." + args.toLowerCase(), adding);
 			try {
 				SFile.save(SignFile);
 			} catch (IOException e) {

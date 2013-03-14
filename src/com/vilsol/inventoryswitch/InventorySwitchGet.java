@@ -29,7 +29,7 @@ public class InventorySwitchGet {
 				e.printStackTrace();
 			}
 			
-			String getting = SFile.getString("Stacks." + args);
+			String getting = SFile.getString("Stacks." + args.toLowerCase());
 			String[] split = getting.split(",");
 			
 			for(int i = 0; i < split.length; i++){
