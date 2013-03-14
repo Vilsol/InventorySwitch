@@ -1,22 +1,23 @@
 name: InventorySwitch
-main: com.github.Vilsol.InventorySwitch.InventorySwitch
-version: 0.1
+main: com.vilsol.inventoryswitch.InventorySwitch
+version: 2.0
 commands:
    is:
-      description: Switches your inventory
+      description: The InventorySwitch command.
+      usage: /<command> <get/set/del/help> [inventory]
 permissions:
     inventoryswitch.*:
         description: Gives access to all InventorySwitch commands
         children:
-            inventoryswitch.ci: true
-            inventoryswitch.rs: true
-            inventoryswitch.wl: true
-    inventoryswitch.ci:
-        description: Allows you to clear your inventory
+            inventoryswitch.get: true
+            inventoryswitch.set: true
+            inventoryswitch.del: true
+    inventoryswitch.get:
+        description: Allows you to retrieve an inventory.
         default: op
-    inventoryswitch.rs:
-        description: Gives you access to RS set
+    inventoryswitch.set:
+        description: Allows you to set an inventory.
         default: op
-    inventoryswitch.wl:
-        description: Gives you access to WL set
+    inventoryswitch.del:
+        description: Allows you to give an inventory.
         default: op
