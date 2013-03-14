@@ -1,5 +1,7 @@
 package com.vilsol.inventoryswitch;
 
+import java.io.IOException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,6 +18,14 @@ public class InventorySwitch extends JavaPlugin {
 	}
 	
 	public void onEnable(){		
+		
+		try {
+		    Metrics metrics = new Metrics(this);
+		    metrics.start();
+		} catch (IOException e) {
+			getLogger().info("Error Submitting stats!");
+		}
+		
 		loadConfiguration();
 		getLogger().info("InventorySwitch by Vilsol Loaded!");
 	}
