@@ -1,6 +1,6 @@
 name: InventorySwitch
 main: com.vilsol.inventoryswitch.InventorySwitch
-version: 2.0
+version: 2.4
 dev-url: http://dev.bukkit.org/server-mods/inventoryswitch/
 commands:
    is:

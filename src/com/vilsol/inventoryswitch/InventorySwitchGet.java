@@ -20,6 +20,7 @@ public class InventorySwitchGet {
 		if(ex.doesExist(args.toLowerCase())){
 			Player p = (Player) sender;
 			Inventory inv = p.getInventory();
+			inv.clear();
 			
 			File SignFile = new File("plugins/InventorySwitch/", "config.yml");
 			YamlConfiguration SFile = new YamlConfiguration();
@@ -34,10 +35,12 @@ public class InventorySwitchGet {
 			
 			for(int i = 0; i < split.length; i++){
 				String[] dual = split[i].split(":");
-				if(dual.length == 3){
-					inv.setItem(i, new ItemStack(Integer.parseInt(dual[0]), Integer.parseInt(dual[1]), (short) Integer.parseInt(dual[2])));
-				}else{
-					inv.setItem(i, new ItemStack(Integer.parseInt(dual[0]), Integer.parseInt(dual[1])));
+				if(dual.length >= 2){
+					if(dual.length == 3){
+						inv.setItem(i, new ItemStack(Integer.parseInt(dual[0]), Integer.parseInt(dual[1]), (short) Integer.parseInt(dual[2])));
+					}else{
+						inv.setItem(i, new ItemStack(Integer.parseInt(dual[0]), Integer.parseInt(dual[1])));
+					}
 				}
 			}
 			sender.sendMessage(prefix + "You have been given the " + args + " inventory!");

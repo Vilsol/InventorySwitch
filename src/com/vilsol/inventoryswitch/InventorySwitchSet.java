@@ -31,14 +31,23 @@ public class InventorySwitchSet {
 			
 			String adding = "";
 			boolean first = true;
+			int queue = 0;
 			
 			for(int i = 0; i < 40; i++){
-				if(!first){
-					adding += ",";
-				}else{
-					first = false;
-				}
 				if(inv.getItem(i) != null){
+					if(queue > 0){
+						for(int z = 0; z < queue+1; z++){
+							adding += "0,";
+						}
+						queue = 0;
+					}else{
+						if(!first){
+							adding += ",";
+						}else{
+							first = false;
+						}
+					}
+					
 					int itemid = inv.getItem(i).getTypeId();
 					int amount = inv.getItem(i).getAmount();
 					int damage = inv.getItem(i).getDurability();
@@ -48,7 +57,7 @@ public class InventorySwitchSet {
 						adding += itemid + ":" + amount + ":" + damage;
 					}
 				}else{
-					adding += "0:0";
+					queue += 1;
 				}
 			}
 			
