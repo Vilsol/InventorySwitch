@@ -17,12 +17,12 @@ public class InventorySwitchGet {
 	
 	public InventorySwitchGet(String args, CommandSender sender) {
 		InventorySwitchExists ex = new InventorySwitchExists();
-		if(ex.doesExist(args.toLowerCase())){
+		if(ex.doesExist(args.toLowerCase(), sender)){
 			Player p = (Player) sender;
 			Inventory inv = p.getInventory();
 			inv.clear();
 			
-			File SignFile = new File("plugins/InventorySwitch/", "config.yml");
+			File SignFile = new File("plugins/InventorySwitch/", "inventories.yml");
 			YamlConfiguration SFile = new YamlConfiguration();
 			try {
 				SFile.load(SignFile);
@@ -30,7 +30,17 @@ public class InventorySwitchGet {
 				e.printStackTrace();
 			}
 			
-			String getting = SFile.getString("Stacks." + args.toLowerCase());
+			InventorySwitchPublic pb = new InventorySwitchPublic();
+			
+			String getting = "";
+			
+			if(pb.isPublic()){
+				getting = SFile.getString("Stacks.Public." + args.toLowerCase());
+			}else{
+				getting = SFile.getString("Stacks." + sender.getName() + "." + args.toLowerCase());
+			}
+			
+			
 			String[] split = getting.split(",");
 			
 			for(int i = 0; i < split.length; i++){

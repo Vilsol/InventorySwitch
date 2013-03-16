@@ -14,8 +14,8 @@ public class InventorySwitchDel {
 	
 	public InventorySwitchDel(String args, CommandSender sender) {
 		InventorySwitchExists ex = new InventorySwitchExists();
-		if(ex.doesExist(args.toLowerCase())){
-			File SignFile = new File("plugins/InventorySwitch/", "config.yml");
+		if(ex.doesExist(args.toLowerCase(), sender)){
+			File SignFile = new File("plugins/InventorySwitch/", "inventories.yml");
 			YamlConfiguration SFile = new YamlConfiguration();
 			try {
 				SFile.load(SignFile);
@@ -23,7 +23,13 @@ public class InventorySwitchDel {
 				e.printStackTrace();
 			}
 			
-			SFile.set("Stacks." + args, null);
+			InventorySwitchPublic pb = new InventorySwitchPublic();
+			
+			if(pb.isPublic()){
+				SFile.set("Stacks.Public." + args, null);
+			}else{
+				SFile.set("Stacks." + sender.getName() + "." + args, null);
+			}
 			
 			try {
 				SFile.save(SignFile);

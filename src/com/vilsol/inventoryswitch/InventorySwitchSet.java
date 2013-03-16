@@ -16,9 +16,9 @@ public class InventorySwitchSet {
 
 	public InventorySwitchSet(String args, CommandSender sender) {
 		InventorySwitchExists ex = new InventorySwitchExists();
-		if(!ex.doesExist(args.toLowerCase())){
+		if(!ex.doesExist(args.toLowerCase(), sender)){
 			
-			File SignFile = new File("plugins/InventorySwitch/", "config.yml");
+			File SignFile = new File("plugins/InventorySwitch/", "inventories.yml");
 			YamlConfiguration SFile = new YamlConfiguration();
 			try {
 				SFile.load(SignFile);
@@ -61,7 +61,15 @@ public class InventorySwitchSet {
 				}
 			}
 			
-			SFile.set("Stacks." + args.toLowerCase(), adding);
+			InventorySwitchPublic pb = new InventorySwitchPublic();
+			
+			if(pb.isPublic()){
+				SFile.set("Stacks.Public." + args.toLowerCase(), adding);
+			}else{
+				SFile.set("Stacks." + sender.getName() + "." + args.toLowerCase(), adding);
+			}
+			
+			
 			try {
 				SFile.save(SignFile);
 			} catch (IOException e) {

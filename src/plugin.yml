@@ -1,11 +1,11 @@
 name: InventorySwitch
 main: com.vilsol.inventoryswitch.InventorySwitch
-version: 2.4
+version: 2.5
 dev-url: http://dev.bukkit.org/server-mods/inventoryswitch/
 commands:
    is:
       description: The InventorySwitch command.
-      usage: /<command> <get/set/del/help> [inventory]
+      usage: /<command> <get/set/del/list/help> [inventory]
 permissions:
     inventoryswitch.*:
         description: Gives access to all InventorySwitch commands
@@ -20,5 +20,14 @@ permissions:
         description: Allows you to set an inventory.
         default: op
     inventoryswitch.del:
-        description: Allows you to give an inventory.
+        description: Allows you to delete an inventory.
+        default: op
+    inventoryswitch.list:
+        description: Allows you to list all inventories.
+        default: op
+    inventoryswitch.get.<name>:
+        description: Allows to get certain inventory.
+        default: op
+    inventoryswitch.del.<name>:
+        description: Allows to delete certain inventory.
         default: op
