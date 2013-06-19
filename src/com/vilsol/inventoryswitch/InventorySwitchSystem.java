@@ -159,7 +159,8 @@ public class InventorySwitchSystem {
 			for(int i = 0; i < 40; i++){
 				if(inv.getItem(i) != null){
 					if(queue > 0){
-						for(int z = 0; z < queue+1; z++){
+						adding += ",";
+						for(int z = 0; z < queue; z++){
 							adding += "0,";
 						}
 						queue = 0;
