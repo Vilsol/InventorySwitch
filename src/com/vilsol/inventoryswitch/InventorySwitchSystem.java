@@ -86,28 +86,29 @@ public class InventorySwitchSystem {
 				getting = SFile.getString("Stacks." + sender.getName() + "." + args.toLowerCase());
 			}
 			
-			String[] split = getting.split(",");
+			String[] splitz = getting.split(",");
 			
-			for(int i = 0; i < split.length; i++){
-				String[] splitter = split[i].split(":");
+			int i = 0;
+			for(String split: splitz){
+				String[] splitter = split.split(":");
 				if(splitter.length >= 2){
 					if(splitter.length >= 3){
 						String[] envs = splitter[2].split("\\.");
 						if(envs.length >= 2){
 							if(envs.length == 2){
-								String enchant = envs[0];
+								int enchant = Integer.parseInt(envs[0]);
 								int lebel = Integer.parseInt(envs[1]);
 								inv.setItem(i, new ItemStack(Integer.parseInt(splitter[0]), Integer.parseInt(splitter[1])));
-								inv.getItem(i).addUnsafeEnchantment(Enchantment.getByName(enchant), lebel);
+								inv.getItem(i).addUnsafeEnchantment(Enchantment.getById(enchant), lebel);
 							}else{
-								String[] enchants = splitter[2].split("\\|");
+								String[] enchantsz = splitter[2].split("\\|");
 								Map<Enchantment, Integer> adde = new HashMap<Enchantment, Integer>();
-								for(int sete = 0; sete < enchants.length; sete++){
-									String[] encha = enchants[sete].split("\\.");
-									String enchant = encha[0];
+								for(String enchants : enchantsz){
+									String[] encha = enchants.split("\\.");
+									int enchant = Integer.parseInt(encha[0]);
 									int lebel = Integer.parseInt(encha[1]);
 									inv.setItem(i, new ItemStack(Integer.parseInt(splitter[0]), Integer.parseInt(splitter[1])));
-									adde.put(Enchantment.getByName(enchant),lebel);
+									adde.put(Enchantment.getById(enchant),lebel);
 								}
 								inv.getItem(i).addUnsafeEnchantments(adde);
 							}
@@ -115,19 +116,19 @@ public class InventorySwitchSystem {
 							if(splitter.length == 4){
 								envs = splitter[3].split("\\.");
 								if(envs.length == 2){
-									String enchant = envs[0];
+									int enchant = Integer.parseInt(envs[0]);
 									int lebel = Integer.parseInt(envs[1]);
-									inv.setItem(i, new ItemStack(Integer.parseInt(splitter[0]), Integer.parseInt(splitter[1])));
-									inv.getItem(i).addUnsafeEnchantment(Enchantment.getByName(enchant), lebel);
+									inv.setItem(i, new ItemStack(Integer.parseInt(splitter[0]), Integer.parseInt(splitter[1]), (short) Integer.parseInt(splitter[2])));
+									inv.getItem(i).addUnsafeEnchantment(Enchantment.getById(enchant), lebel);
 								}else{
-									String[] enchants = splitter[2].split("\\|");
+									String[] enchantsz = splitter[3].split("\\|");
 									Map<Enchantment, Integer> adde = new HashMap<Enchantment, Integer>();
-									for(int sete = 0; sete < enchants.length; sete++){
-										String[] encha = enchants[sete].split("\\.");
-										String enchant = encha[0];
+									for(String enchants : enchantsz){
+										String[] encha = enchants.split("\\.");
+										int enchant = Integer.parseInt(encha[0]);
 										int lebel = Integer.parseInt(encha[1]);
-										inv.setItem(i, new ItemStack(Integer.parseInt(splitter[0]), Integer.parseInt(splitter[1])));
-										adde.put(Enchantment.getByName(enchant),lebel);
+										inv.setItem(i, new ItemStack(Integer.parseInt(splitter[0]), Integer.parseInt(splitter[1]), (short) Integer.parseInt(splitter[2])));
+										adde.put(Enchantment.getById(enchant),lebel);
 									}
 									inv.getItem(i).addUnsafeEnchantments(adde);
 								}
@@ -138,6 +139,12 @@ public class InventorySwitchSystem {
 					}else{
 						inv.setItem(i, new ItemStack(Integer.parseInt(splitter[0]), Integer.parseInt(splitter[1])));
 					}
+					i++;
+				}
+				if(split.contains("+")){
+					String[] plusesz = split.split("\\+");
+					int pluses = Integer.parseInt(plusesz[1]);
+					i += pluses;
 				}
 			}
 			sender.sendMessage(prefix + "You have been given the " + args + " inventory!");
@@ -159,10 +166,7 @@ public class InventorySwitchSystem {
 			for(int i = 0; i < 40; i++){
 				if(inv.getItem(i) != null){
 					if(queue > 0){
-						adding += ",";
-						for(int z = 0; z < queue; z++){
-							adding += "0,";
-						}
+						adding += ",+" + queue + ",";
 						queue = 0;
 					}else{
 						if(!first){
@@ -187,7 +191,8 @@ public class InventorySwitchSystem {
 							if(counter > 1){
 								adding += "|";
 							}
-							adding += entry.getKey().getName() + "." + entry.getValue();
+							int ench = Enchantment.getByName(entry.getKey().getName()).getId();
+							adding += ench + "." + entry.getValue();
 							counter++;
 						}
 					}
